@@ -1,0 +1,33 @@
+{% extends "__base.html" %}
+{% from "_form_macros.html" import render_field %}
+{% from "_form_macros.html" import render_field_without_label %}
+{% from "_form_macros.html" import simple_render_field %}
+
+
+{% block content %}
+   <div class="row">
+        <div class="col-md-2">
+            {% block side_col %}
+                       <!-- Sidebar -->
+                <div id="sidebar-wrapper">
+                    <nav id="spy">
+                        <ul class="sidebar-nav nav">
+                            <li class="sidebar-brand">
+                                <a href="#home"><span class="fa fa-home solo">Side Menu 1</span></a>
+                            </li>
+                            <li>
+                                <a href="#" data-scroll>
+                                    <span class="fa fa-anchor solo">Side Sub Menu 1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            {% endblock %}
+        </div>
+        <div class="col-md-10">
+            {% block main_col %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+

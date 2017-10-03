@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    {% block head %}
+        <title>Exit Systems - {% block title %}{% endblock %} </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.css') }}">
+        <script src="{{url_for('static', filename='bootstrap/js/jquery-3.2.0.js') }}"></script>
+        <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.js') }}"></script>
+        <script src="{{url_for('static', filename='moment.js') }}"></script>
+        {% block content_scripts %}
+        {% endblock %}
+    {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Flask Dynamic User Menus</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ url_for('users.users_processing') }}">User Management</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Main Menu <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Sub Menu 1 </a></li>
+                        <li><a href="#">Sub Menu 2</a></li>
+                        <li><a href="#">Sub Menu 3</a></li>
+                        <li><a href="#">Sub Menu 4</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Main Menu 2<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Sub Menu 5</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><strong>Welcome</strong> </a></li>
+                <li><a href=#><strong><span class="glyphicon glyphicon-log-in"></span> Login</strong></a></li>
+            </ul>
+        </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="col-md-12">
+
+                     <!-- flash messages -->
+                    {% for error_message in get_flashed_messages(category_filter=["error"]) %}
+                        <div class="alert alert-danger alert-dismissible">{{ error_message }}</div>
+                    {% endfor %}
+
+                    {% for success_message in get_flashed_messages(category_filter=["success"]) %}
+                        <div class="alert alert-success alert-dismissible">{{ success_message }}</div>
+                    {% endfor %}
+
+                    {% for info_message in get_flashed_messages(category_filter=["info"]) %}
+                        <div class="alert alert-info alert-dismissible">{{ info_message }}</div>
+                    {% endfor %}
+
+                    {% for info_message in get_flashed_messages(category_filter=["warning"]) %}
+                        <div class="alert alert-warning alert-dismissible">{{ info_message }}</div>
+                    {% endfor %}
+                    <!--end of flash messages-->
+
+                    <!-- child templates -->
+                    {% block content %}{% endblock %}
+                    <!--end of child templates -->
+            </div>
+        </div>
+
+        <div id="footer">
+            {% block footer %}
+            &copy; Copyright 2017 by <a href="127.0.0.1:5000/">Avagut</a>.
+            {% endblock %}
+        </div>
+
+    </body>
+</html>

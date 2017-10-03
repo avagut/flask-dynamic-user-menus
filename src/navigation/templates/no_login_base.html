@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    {% block head %}
+        <title>Exits System - {% block title %}{% endblock %} </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.css') }}">
+        <script src="{{url_for('static', filename='bootstrap/js/jquery-3.2.0.js') }}"></script>
+        <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{url_for('static', filename='jquery-ui-1.12.1/jquery-ui.js') }}"></script>
+        <script src="{{url_for('static', filename='moment.js') }}"></script>
+        {% block content_scripts %}{% endblock %}
+    {% endblock %}
+    </head>
+    <body>
+    {% from "_form_macros.html" import render_field %}
+    {% from "_form_macros.html" import render_field_without_label %}
+    {% from "_form_macros.html" import simple_render_field %}
+        <div class="container-fluid">
+            <div class="col-md-12">
+                     <!-- flash messages -->
+                    {% for error_message in get_flashed_messages(category_filter=["error"]) %}
+                        <div class="alert alert-danger alert-dismissible">{{ error_message }}</div>
+                    {% endfor %}
+
+                    {% for success_message in get_flashed_messages(category_filter=["success"]) %}
+                        <div class="alert alert-success alert-dismissible">{{ success_message }}</div>
+                    {% endfor %}
+
+                    {% for info_message in get_flashed_messages(category_filter=["info"]) %}
+                        <div class="alert alert-info alert-dismissible">{{ info_message }}</div>
+                    {% endfor %}
+
+                    {% for info_message in get_flashed_messages(category_filter=["warning"]) %}
+                        <div class="alert alert-warning alert-dismissible">{{ info_message }}</div>
+                    {% endfor %}
+                    <!--end of flash messages-->
+
+                    <!-- child templates -->
+                    {% block content %}
+
+                    {% endblock %}
+                    <!--end of child templates -->
+            </div>
+        </div>
+        </div>
+    </body>
+</html>

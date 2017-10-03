@@ -1,0 +1,34 @@
+{% extends "no_login_base.html" %}
+{% block title %}Change this title{% endblock %}
+
+{% block content %}
+
+       <div class="container-fluid" >
+           <div class="row">
+               <div class="col-md-3">
+
+               </div>
+               <div class="col-md-6">
+                   <div class="col-md-12">
+                        <form class="form-horizontal" role="form" method="POST">
+                            <strong><h4>Request Password Via Email</h4></strong>
+                                {{ form.csrf_token }}
+                                {{render_field_without_label(form.email)}}
+                        </br>
+
+                                <button name = "submit" class="btn btn-primary" type="submit">Send Pasword Request</button>
+                                <a class="btn btn-danger" href="{{ url_for('users.login')}}">Cancel Request</a>
+                                <hr>
+                        </form>
+                    </div>
+               </div>
+               <div class="col-md-3">
+
+               </div>
+
+            </div>
+        </div>
+{% endblock %}
+
+
+

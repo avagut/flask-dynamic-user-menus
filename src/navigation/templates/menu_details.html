@@ -1,0 +1,67 @@
+{% extends "__l_left_sidebar.html" %}
+{% block title %}Change this title{% endblock %}
+{% block side_col %}
+    {{super()}}
+{% endblock %}
+
+{% block main_col %}
+
+       <div class="container-fluid" >
+       <div class="row">
+           <h4><strong>Menu Details</strong></h4>
+            <div class="col-md-5" style="background:#ebeff2">
+                <br>
+                <form class="form-horizontal" role="form" method="POST">
+                        {{ form.csrf_token }}
+                        {{render_field(form.menu_text)}}
+                        {{render_field(form.menu_name)}}
+                        {{render_field(form.menu_url)}}
+                        {{render_field(form.is_active)}}
+                   <div class="col-sm-offset-4 col-sm-4">
+                        <button name = "submit" class="btn btn-primary"
+                                type="submit">Save Menu Details</button>
+                   </div>
+                   <div class="col-sm-offset-0 col-sm-4">
+                       <a class="btn btn-danger"
+                          href="{{ url_for('navigation.navmenus')}}">
+                           Cancel Request</a>
+                        <br>
+                   </div>
+                   <div class="row">
+                       <div class="col-md-offset-4 col-md-4">
+                           <!--<a class="btn btn-primary" href="{{ url_for('users.users_processing')}}">Resend Confirmation</a>-->
+                       </div>
+                       <hr>
+                   </div>
+                </form>
+            </div>
+        </div>
+           <br>
+           <br>
+        <div class="row">
+            <div class="col-md-3">
+
+                <h4><strong> Menus Details Listing</strong></h4>
+            </div>
+            <form>
+            <div class="col-md-4">
+                {{searchform.search_string}}
+            </div>
+            <div class="pull-left col-md-3">
+                <button name = "submit" class="btn btn-success"
+                        type="submit">Search Menu</button>
+
+                <a class="btn btn-primary"
+                   href="{{ url_for('navigation.navmenus')}}">
+                    Reset Search</a>
+            </div>
+            </form>
+        </div>
+        <div class="row">
+            <hr>
+            {{menus_table}}
+        </div>
+
+
+    </div>
+{% endblock %}

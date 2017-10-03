@@ -1,0 +1,11 @@
+#sidebar-wrapper {
+  margin-left: -250px;
+  /* left: 250px; */
+  /* width: 250px; */
+  background: #000;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 1000;
+  transition: all 0.1s ease 0s;
+}

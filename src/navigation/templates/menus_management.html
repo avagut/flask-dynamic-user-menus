@@ -1,0 +1,198 @@
+{% extends "__l_left_sidebar.html" %}
+{% block title %}Change this title{% endblock %}
+{% block side_col %}
+    {{super()}}
+{% endblock %}
+{% block content_scripts %}
+      <script type = "text/javascript"
+            src="{{ url_for('users.static', filename='menus_process.js') }}">
+      </script>
+{% endblock %}
+
+{% block main_col %}
+{% if not role_menus %}
+    <form class="form-horizontal" role="form">
+            <div class="col-md-4">
+                {{roles_form.role}}
+            </div>
+            <div class="pull-left col-md-4">
+                {{roles_form.submit_select_role}}
+                <a class="btn btn-primary"
+                href="{{ url_for('navigation.menus_management')}}">
+                Reset Search</a>
+            </div>
+    </form>
+{% endif %}
+    <br> <br> <br> <br>
+        <div class="row">
+            <div class="col-md-9">
+                {% if is_set_role_menu %}
+                <form name="edit_details" class="form-inline" method="POST">
+                    {{ role_menu_detail_form.csrf_token }}
+                    <table class="table table-striped,
+                        table table-hover, table table-condensed table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Menu Name</th>
+                                <th>Can View</th>
+                                <th>Can Create</th>
+                                <th>Can Edit</th>
+                                <th>Can Delete</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                               <td text-center> {{role_menu_detail_form.menu_name}}</td>
+                               <td text-center> {{role_menu_detail_form.can_view}}</td>
+                               <td text-center> {{role_menu_detail_form.can_create}}</td>
+                               <td text-center> {{role_menu_detail_form.can_edit}}</td>
+                               <td text-center> {{role_menu_detail_form.can_delete}}</td>
+                               <td>{{role_menu_detail_form.submit_change_role_menu}}</td>
+                               <td><a class="btn btn-danger"
+                                      href="{{ url_for('navigation.menus_management')}}">Cancel</a></td>
+                               <td>{{role_menu_detail_form.role_menu_id}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </form>
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="col-md-9">
+            {% if role_menus %}<br><br>
+            <div class="pull-left col-md-6">
+            <b><h4><label id="selected_role" class="selected_role"
+                    visible="true">{{this_role}} Menus</label></h4></b>
+            </div>
+
+            <div class="pull-left col-md-3">
+                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#myModalHorizontal">
+                    Assign New Role Menu
+                </button>
+            </div>
+            <div class="pull-left col-md-3">
+                <a class="btn btn-primary"
+                href="{{ url_for('navigation.menus_management')}}">
+                Reset Search</a>
+            </div>
+
+
+
+                <table id="my_roles_menus" name="my_roles_menus" class="table table-striped,
+                table table-hover, table table-condensed table table-condensed">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Menu Name</th>
+                            <th>Can View</th>
+                            <th>Can Create</th>
+                            <th>Can Edit</th>
+                            <th>Can Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                         {% for rolemenu in role_menus %}
+                           <tr class="m-rows">
+                               <td><a href="{{ url_for('navigation.menus_management',
+                                    ident=rolemenu.role_menu_id)}}">Edit</a></td>
+                               <td class="menu_name">{{rolemenu.menu_name}}</td>
+                               <td> {% if rolemenu.can_view == True %}
+                                        <input type=checkbox name=can_view
+                                               onclick="return false;"
+                                          checked={{rolemenu.can_view}}>
+                                    {% else %}
+                                        <input type=checkbox name=can_view
+                                               onclick="return false;">
+                                    {% endif %}
+                               </td>
+                               <td> {% if rolemenu.can_create == True %}
+                                        <input type=checkbox name=can_create
+                                               onclick="return false;"
+                                          checked={{rolemenu.can_create}}>
+                                    {% else %}
+                                        <input type=checkbox name=can_create
+                                        onclick="return false;">
+                                    {% endif %}
+                               </td>
+                               <td> {% if rolemenu.can_edit == True %}
+                                        <input type=checkbox name=can_edit
+                                          checked={{rolemenu.can_edit}}
+                                        onclick="return false;">
+                                    {% else %}
+                                        <input type=checkbox name=can_edit
+                                        onclick="return false;">
+                                    {% endif %}
+                               </td>
+                               <td> {% if rolemenu.can_delete == True %}
+                                        <input type=checkbox name=can_delete
+                                          checked={{rolemenu.can_delete}}
+                                        onclick="return false;">
+                                    {% else %}
+                                        <input type=checkbox name=can_delete
+                                        onclick="return false;">
+                                    {% endif %}
+                               </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Role Menu Details
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form class="form-horizontal" name="new_details" role="form"
+                      method="POST">
+                    {{ form.csrf_token }}
+                    {{render_field(form.role_id)}}
+                    {{render_field(form.menu_id)}}
+                    {{render_field(form.is_active)}}
+                    <div class="col-sm-offset-4 col-sm-4">
+                        {{render_field_without_label(form.submit_role_menu)}}
+                    </div>
+                    <div class="col-sm-4">
+                        <a class="btn btn-danger"
+                          href="{{ url_for('navigation.menus_management')}}">
+                           Cancel Request</a>
+                        <br>
+                    </div>
+                </form>
+                <br>  <br>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                            Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
