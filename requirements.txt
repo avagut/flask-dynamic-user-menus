@@ -53,7 +53,7 @@ requests==2.18.4
 six==1.11.0
 snowballstemmer==1.2.1
 SQLAlchemy==1.1.14
-urllib3==1.22
+urllib3==1.26.5
 virtualenv==15.1.0
 Werkzeug==0.12.2
 wrapt==1.10.11
